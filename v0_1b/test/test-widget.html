@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>v0.1b Widget Test Harness (stub)</title>
+    <link rel="stylesheet" href="../widget/widget.css" />
+  </head>
+  <body>
+    <main style="padding: 24px; font-family: Inter, system-ui, sans-serif;">
+      <h1>Widget test harness (v0.1b)</h1>
+      <p>This page will load the v0.1b widget once implemented.</p>
+      <button id="init">Init widget</button>
+    </main>
+    <script src="../widget/sdk.js"></script>
+    <script>
+      document.getElementById('init').addEventListener('click', () => {
+        SmartScaleChat.init({
+          shopPublicId: 'stub-public-id',
+          shopDomain: 'example.myshopify.com',
+        });
+      });
+    </script>
+  </body>
+</html>

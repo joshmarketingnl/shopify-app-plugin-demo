@@ -1,3 +1,5 @@
 node_modules/
 .env
 npm-debug.log*
+v0_1b/.env
+v0_1b/server/data/secrets.local.json
