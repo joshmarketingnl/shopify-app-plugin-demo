@@ -17,10 +17,13 @@ Notes:
 Notes:
 - Built full admin UI with sidebar navigation, host/admin-secret inputs, and SaaS cards.
 - Clients & shops CRUD wired to admin API; shop config form covers brand, tone, colors, widget position, capabilities.
-- AI settings page captures OpenAI key (write-only), debug toggle, fixed model “o4”; snippets auto-generate for SDK/iframe.
+- AI settings page captures OpenAI key (write-only), debug toggle, fixed model "o4"; snippets auto-generate for SDK/iframe.
 
-[ ] PHASE_D_WIDGET  
+[x] PHASE_D_WIDGET  
 Notes:
+- Implemented SmartScaleChat widget SDK with floating launcher, slide-up panel, messaging UI, and block rendering (text, product_list, action_buttons).
+- Added Ajax Cart helper for add-to-cart, basic error handling, and checkout action; product cards include quantity controls and fallbacks.
+- Styled widget with Wizzy-like cards/bubbles and refreshed test harness to initialize the widget via inputs.
 
 [ ] PHASE_E_AI_SERVICE  
 Notes:

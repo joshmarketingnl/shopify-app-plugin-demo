@@ -3,21 +3,71 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>v0.1b Widget Test Harness (stub)</title>
+    <title>v0.1b Widget Test Harness</title>
     <link rel="stylesheet" href="../widget/widget.css" />
+    <style>
+      body {
+        font-family: "Inter", system-ui, sans-serif;
+        background: #f8fafc;
+        margin: 0;
+      }
+      .harness {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+      .card {
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 14px;
+        padding: 16px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      }
+      label {
+        display: block;
+        font-weight: 600;
+        margin-top: 10px;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 10px;
+        border: 1px solid #e5e7eb;
+        margin-top: 6px;
+      }
+      button {
+        margin-top: 14px;
+        padding: 10px 14px;
+        border: none;
+        border-radius: 10px;
+        background: #2563eb;
+        color: #fff;
+        font-weight: 700;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
-    <main style="padding: 24px; font-family: Inter, system-ui, sans-serif;">
+    <main class="harness">
       <h1>Widget test harness (v0.1b)</h1>
-      <p>This page will load the v0.1b widget once implemented.</p>
-      <button id="init">Init widget</button>
+      <p>Start your local server, then initialize the widget with a test shopPublicId.</p>
+      <div class="card">
+        <label for="shopId">Shop public ID</label>
+        <input id="shopId" type="text" placeholder="public-id" value="stub-public-id" />
+        <label for="shopDomain">Shop domain</label>
+        <input id="shopDomain" type="text" placeholder="example.myshopify.com" value="example.myshopify.com" />
+        <label for="hostBase">Host base URL</label>
+        <input id="hostBase" type="text" placeholder="http://localhost:3000" value="" />
+        <button id="init">Init widget</button>
+      </div>
     </main>
     <script src="../widget/sdk.js"></script>
     <script>
       document.getElementById('init').addEventListener('click', () => {
         SmartScaleChat.init({
-          shopPublicId: 'stub-public-id',
-          shopDomain: 'example.myshopify.com',
+          shopPublicId: document.getElementById('shopId').value.trim(),
+          shopDomain: document.getElementById('shopDomain').value.trim(),
+          hostBaseUrl: document.getElementById('hostBase').value.trim() || undefined,
         });
       });
     </script>
