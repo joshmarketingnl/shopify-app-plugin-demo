@@ -8,12 +8,56 @@
   </head>
   <body>
     <h1>Widget Test Harness</h1>
-    <p>This page loads the widget SDK from /widget for local testing.</p>
+    <p>
+      This page loads the widget SDK from /widget for local testing. Enter a shopPublicId to try a
+      specific shop (e.g., kosso-demo-v0.2).
+    </p>
+
+    <form id="testerForm">
+      <label>
+        shopPublicId
+        <input id="publicIdInput" type="text" value="demo-shop" />
+      </label>
+      <label>
+        shopDomain (optional)
+        <input id="shopDomainInput" type="text" placeholder="your-shop.myshopify.com" />
+      </label>
+      <button type="submit">Load widget</button>
+    </form>
+
+    <p>Tip: you can also pass query params, e.g. <code>?publicId=kosso-demo-v0.2&shopDomain=kossonutrition.myshopify.com</code>.</p>
+
     <script src="/widget/sdk.js"></script>
     <script>
+      function getParam(name) {
+        const url = new URL(window.location.href);
+        return url.searchParams.get(name);
+      }
+
+      function initFromForm(event) {
+        event?.preventDefault();
+        if (!window.SmartScaleChat) return;
+        const publicId = document.getElementById('publicIdInput').value.trim();
+        const shopDomain = document.getElementById('shopDomainInput').value.trim();
+        if (!publicId) {
+          alert('Please enter a shopPublicId');
+          return;
+        }
+        window.SmartScaleChat.init({
+          shopPublicId: publicId,
+          shopDomain: shopDomain || undefined,
+        });
+      }
+
       window.addEventListener('load', () => {
-        if (window.SmartScaleChat) {
-          window.SmartScaleChat.init({ shopPublicId: 'demo-shop' });
+        const initialPublicId = getParam('publicId');
+        const initialDomain = getParam('shopDomain');
+        if (initialPublicId) document.getElementById('publicIdInput').value = initialPublicId;
+        if (initialDomain) document.getElementById('shopDomainInput').value = initialDomain;
+        document.getElementById('testerForm').addEventListener('submit', initFromForm);
+        // auto-init if a publicId was passed via query params
+        if (initialPublicId && window.SmartScaleChat) {
+          initFromForm();
         }
       });
     </script>
