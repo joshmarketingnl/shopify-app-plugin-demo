@@ -36,6 +36,7 @@ function getOpenAiConfig() {
   const secrets = ensureSecrets();
   const openai = secrets.openai || {};
   return {
+    apiKey: openai.apiKey || '',
     hasApiKey: Boolean(openai.apiKey),
     model: openai.model || 'o4',
     debugLogging: Boolean(openai.debugLogging),

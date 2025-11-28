@@ -25,8 +25,10 @@ Notes:
 - Added Ajax Cart helper for add-to-cart, basic error handling, and checkout action; product cards include quantity controls and fallbacks.
 - Styled widget with Wizzy-like cards/bubbles and refreshed test harness to initialize the widget via inputs.
 
-[ ] PHASE_E_AI_SERVICE  
+[x] PHASE_E_AI_SERVICE  
 Notes:
+- Added aiService using OpenAI o4 with JSON block responses and system prompt built from shop config.
+- Implemented chat route to validate input, resolve shop by publicId, call AI, and return blocks with graceful fallbacks.
 
 [ ] PHASE_F_SHOPIFY_SERVICE  
 Notes:
