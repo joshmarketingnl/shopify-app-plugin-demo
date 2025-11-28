@@ -64,7 +64,13 @@ function setOpenAiConfig({ apiKey, debugLogging }) {
   };
 }
 
+function getShopifyToken(shopId) {
+  const secrets = ensureSecrets();
+  return secrets.shopify?.[shopId]?.storefrontToken || '';
+}
+
 module.exports = {
   getOpenAiConfig,
   setOpenAiConfig,
+  getShopifyToken,
 };

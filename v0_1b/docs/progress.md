@@ -30,8 +30,11 @@ Notes:
 - Added aiService using OpenAI o4 with JSON block responses and system prompt built from shop config.
 - Implemented chat route to validate input, resolve shop by publicId, call AI, and return blocks with graceful fallbacks.
 
-[ ] PHASE_F_SHOPIFY_SERVICE  
+[x] PHASE_F_SHOPIFY_SERVICE  
 Notes:
+- Implemented shopifyService with Storefront API search/details helpers resolving shop domain + token.
+- Chat route now prefetches top products and passes product context into aiService prompts.
+- Added Shopify token resolver in secretService to allow per-shop tokens.
 
 [ ] PHASE_G_LOGGING_DEBUG  
 Notes:

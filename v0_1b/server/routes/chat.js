@@ -1,6 +1,7 @@
 const express = require('express');
 const configService = require('../services/configService');
 const aiService = require('../services/aiService');
+const shopifyService = require('../services/shopifyService');
 
 const router = express.Router();
 
@@ -19,9 +20,21 @@ router.post('/', async (req, res) => {
     });
   }
 
-  const shopConfig = configService.getShopConfig(shop.id);
+  const shopConfig = { id: shop.id, ...configService.getShopConfig(shop.id), shopDomain: shop.shopDomain };
 
   const conversationContext = []; // Placeholder for future memory/summary
+
+  let productContext = [];
+  try {
+    productContext = await shopifyService.searchProducts({
+      shopConfig,
+      query: message,
+      limit: 3,
+    });
+  } catch (err) {
+    console.error('Product search failed', err);
+  }
+
   try {
     const result = await aiService.getChatResponse({
       shopConfig,
@@ -29,6 +42,7 @@ router.post('/', async (req, res) => {
       conversationContext,
       cartSnapshot,
       sessionId,
+      productContext,
     });
     res.json({ blocks: result.blocks || [] });
   } catch (err) {

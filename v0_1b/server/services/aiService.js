@@ -24,7 +24,12 @@ function buildSystemPrompt(shopConfig = {}) {
     .join('\n');
 }
 
-async function getChatResponse({ shopConfig, userMessage, conversationContext = [] }) {
+async function getChatResponse({
+  shopConfig,
+  userMessage,
+  conversationContext = [],
+  productContext = [],
+}) {
   const { apiKey, model } = secretService.getOpenAiConfig();
   if (!apiKey) {
     return {
@@ -38,9 +43,15 @@ async function getChatResponse({ shopConfig, userMessage, conversationContext = 
 
   const messages = [
     { role: 'system', content: buildSystemPrompt(shopConfig) },
+    productContext.length
+      ? {
+          role: 'system',
+          content: `Product context (JSON): ${JSON.stringify(productContext).slice(0, 6000)}`,
+        }
+      : null,
     ...conversationContext,
     { role: 'user', content: userMessage },
-  ];
+  ].filter(Boolean);
 
   let completion;
   try {
