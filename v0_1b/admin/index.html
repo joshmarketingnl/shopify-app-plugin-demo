@@ -7,10 +7,198 @@
     <link rel="stylesheet" href="admin.css" />
   </head>
   <body>
-    <div class="placeholder">
-      <h1>Admin UI (v0.1b)</h1>
-      <p>The full multi-tenant dashboard will live here. Coming soon.</p>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="logo">
+          <div class="logo-mark">SS</div>
+          <div>
+            <div class="logo-title">SmartScale</div>
+            <div class="logo-sub">Shopify AI · v0.1b</div>
+          </div>
+        </div>
+        <div class="sidebar-section">
+          <label for="hostBaseInput">Host base URL</label>
+          <input id="hostBaseInput" type="text" placeholder="http://localhost:3000" />
+        </div>
+        <div class="sidebar-section">
+          <label for="adminSecretInput">Admin secret (header: x-admin-secret)</label>
+          <input id="adminSecretInput" type="password" placeholder="Optional for now" />
+          <button id="saveAdminSecret" class="ghost-btn">Save</button>
+        </div>
+        <nav class="nav">
+          <button class="nav-link active" data-target="view-clients">Clients & Shops</button>
+          <button class="nav-link" data-target="view-ai">AI Settings</button>
+          <button class="nav-link" data-target="view-dev">Developer Test</button>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <div class="breadcrumb">Admin · v0.1b</div>
+            <h1>Control center</h1>
+          </div>
+          <div id="statusBadge" class="status-badge">Ready</div>
+        </header>
+
+        <section id="view-clients" class="view active">
+          <div class="grid three-col">
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2>Clients</h2>
+                  <p class="muted">Create and select a client to manage shops.</p>
+                </div>
+                <button id="refreshClients" class="ghost-btn">Refresh</button>
+              </div>
+              <div id="clientList" class="pill-list"></div>
+              <form id="clientForm" class="form">
+                <label>Name</label>
+                <input name="name" type="text" placeholder="Acme Co." required />
+                <label>Contact email (optional)</label>
+                <input name="contactEmail" type="email" placeholder="ops@acme.co" />
+                <button type="submit" class="primary-btn">Add client</button>
+              </form>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2>Shops</h2>
+                  <p class="muted">Each shop belongs to the selected client.</p>
+                </div>
+                <button id="refreshShops" class="ghost-btn">Refresh</button>
+              </div>
+              <div id="shopList" class="pill-list"></div>
+              <form id="shopForm" class="form">
+                <label>Shop domain</label>
+                <input name="shopDomain" type="text" placeholder="example.myshopify.com" required />
+                <label>Public ID (widget)</label>
+                <input name="publicId" type="text" placeholder="public-id-for-widget" />
+                <label>Shop name (optional)</label>
+                <input name="name" type="text" placeholder="Flagship store" />
+                <label>Status</label>
+                <select name="status">
+                  <option value="active">Active</option>
+                  <option value="paused">Paused</option>
+                </select>
+                <button type="submit" class="primary-btn">Add shop</button>
+              </form>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <div>
+                  <h2>Shop config</h2>
+                  <p class="muted">Brand, tone, and widget capabilities.</p>
+                </div>
+                <button id="saveShopConfig" class="primary-btn">Save config</button>
+              </div>
+              <div id="shopConfigEmpty" class="empty-state">Select a shop to edit its config.</div>
+              <form id="shopConfigForm" class="form hidden">
+                <label>Brand description</label>
+                <textarea name="brandDescription" rows="2" placeholder="What makes this brand special?"></textarea>
+
+                <div class="split">
+                  <div>
+                    <label>Tone / voice</label>
+                    <input name="tone" type="text" placeholder="Friendly, concise" />
+                  </div>
+                  <div>
+                    <label>Language</label>
+                    <input name="language" type="text" placeholder="en" />
+                  </div>
+                </div>
+
+                <label>Base system prompt</label>
+                <textarea name="baseSystemPrompt" rows="2" placeholder="Core instructions to the assistant"></textarea>
+
+                <label>Extra context</label>
+                <textarea name="extraContext" rows="2" placeholder="Collections, hero products, policy notes"></textarea>
+
+                <div class="split">
+                  <div>
+                    <label>Primary color</label>
+                    <input name="primaryColor" type="text" placeholder="#2563eb" />
+                  </div>
+                  <div>
+                    <label>Accent color</label>
+                    <input name="accentColor" type="text" placeholder="#111827" />
+                  </div>
+                </div>
+
+                <label>Widget position</label>
+                <select name="widgetPosition">
+                  <option value="bottom-right">Bottom right</option>
+                  <option value="bottom-left">Bottom left</option>
+                  <option value="top-right">Top right</option>
+                  <option value="top-left">Top left</option>
+                </select>
+
+                <div class="switches">
+                  <label><input type="checkbox" name="canModifyCart" /> Allow cart modifications</label>
+                  <label><input type="checkbox" name="showProductImages" /> Show product images</label>
+                  <label><input type="checkbox" name="enableQuantityButtons" /> Enable quantity buttons</label>
+                </div>
+
+                <div class="snippet-block">
+                  <div class="snippet-header">
+                    <h3>Embed snippet</h3>
+                    <span class="muted">Copy into theme (replace IDs as needed).</span>
+                  </div>
+                  <textarea id="sdkSnippet" readonly rows="6"></textarea>
+                  <div class="snippet-header">
+                    <h3>Iframe test snippet</h3>
+                    <span class="muted">Optional dev harness embed.</span>
+                  </div>
+                  <textarea id="iframeSnippet" readonly rows="3"></textarea>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        <section id="view-ai" class="view">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2>AI settings</h2>
+                <p class="muted">OpenAI o4 only; key is stored server-side.</p>
+              </div>
+              <div class="status-pill" id="aiKeyStatus">No key stored</div>
+            </div>
+            <form id="aiForm" class="form">
+              <label>OpenAI API key (never returned after save)</label>
+              <input name="apiKey" type="password" placeholder="sk-..." />
+              <label>Model</label>
+              <input type="text" value="o4" disabled />
+              <label class="switch">
+                <input type="checkbox" name="debugLogging" />
+                <span>Enable debug logging</span>
+              </label>
+              <button type="submit" class="primary-btn">Save AI settings</button>
+            </form>
+          </div>
+        </section>
+
+        <section id="view-dev" class="view">
+          <div class="card">
+            <div class="card-header">
+              <div>
+                <h2>Developer test</h2>
+                <p class="muted">Use the test harness to verify widget rendering locally.</p>
+              </div>
+            </div>
+            <p>Open <a href="/v0_1b/test/test-widget.html" target="_blank">/v0_1b/test/test-widget.html</a> after starting the server.</p>
+            <ul class="muted">
+              <li>Ensure HOST_BASE_URL matches where the server is running.</li>
+              <li>Use a shop with a publicId to exercise the widget snippet.</li>
+            </ul>
+          </div>
+        </section>
+      </main>
     </div>
+
     <script src="admin.js"></script>
   </body>
 </html>

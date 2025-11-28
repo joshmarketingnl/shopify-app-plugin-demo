@@ -13,8 +13,11 @@ Notes:
 - Implemented admin API routes for clients/shops CRUD, shop config, and AI settings (no secrets echoed).
 - Seeded data/config.json, updated architecture docs with sample JSON, cleaned README.
 
-[ ] PHASE_C_ADMIN_UI  
+[x] PHASE_C_ADMIN_UI  
 Notes:
+- Built full admin UI with sidebar navigation, host/admin-secret inputs, and SaaS cards.
+- Clients & shops CRUD wired to admin API; shop config form covers brand, tone, colors, widget position, capabilities.
+- AI settings page captures OpenAI key (write-only), debug toggle, fixed model “o4”; snippets auto-generate for SDK/iframe.
 
 [ ] PHASE_D_WIDGET  
 Notes:
