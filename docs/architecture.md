@@ -31,6 +31,9 @@
 - Config form edits AI prompt/context, branding colors, widget position, integration domain/token, and cart/product toggles.
 - Embed snippet is generated per shop using `shopPublicId` and `shopDomain` for copy/paste.
 
+## Widget config fetch
+- Public endpoint: `GET /api/public/shop-config/:publicId` returns a sanitized config (branding, capabilities, shopDomain) for the widget to theme itself and decide whether cart buttons are enabled.
+
 ## Notes for future phases
 - Add theme app embed for managed injection.
 - Add persistent storage + OAuth for per-shop tokens and Storefront API access tokens.

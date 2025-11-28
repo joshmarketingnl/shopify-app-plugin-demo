@@ -21,3 +21,10 @@ Next: Phase 4 will build the admin UI to manage clients/shops/configs and displa
 - Updated `docs/vision.md` and `docs/architecture.md` to capture the admin UX approach.
 
 Next: Phase 5 will implement the widget SDK/chat UI with Ajax Cart hooks and styling.
+
+## Phase 5 - Widget SDK, chat UI, Ajax Cart hooks
+- Implemented widget UI with floating launcher, chat panel, text + product_list rendering, and checkout shortcut.
+- Added Ajax Cart helpers (`/cart/add.js`, `/cart/change.js`) and respect `capabilities.canModifyCart/showProductImages/enableQuantityButtons`.
+- Widget now loads branding/capabilities via a public `/api/public/shop-config/:publicId` route and injects its own CSS from the widget host.
+
+Next: Phase 6 will wire the AI service and /api/chat to produce structured blocks.
