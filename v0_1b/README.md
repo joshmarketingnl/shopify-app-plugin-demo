@@ -14,8 +14,8 @@ Namespaced demo that runs alongside the legacy v0.1 without conflicts. Backend, 
 - `/v0_1b/widget` — widget SDK/static assets.
 - `/v0_1b/test` — local test harness.
 - `/v0_1b/api/chat` — chat API (stub; will integrate OpenAI o4 + Shopify).
-- `/v0_1b/api/admin` — admin API (stub; will manage clients/shops/config).
+- `/v0_1b/api/admin` — admin API (now supports clients, shops, configs, and AI settings).
 
 ## Notes
 - All code and data for v0.1b stay inside `v0_1b/` so the legacy demo remains untouched.
-- Do not commit real secrets or tokens; they belong in local `.env` or a gitignored secrets file.
+- Do not commit real secrets or tokens; they belong in local `.env` or the gitignored `server/data/secrets.local.json`.

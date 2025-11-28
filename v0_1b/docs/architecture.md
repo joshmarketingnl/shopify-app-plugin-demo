@@ -11,21 +11,55 @@
 
 ## Text diagram
 ```
-Admin UI ──(x-admin-secret)──> Admin API ──> config.json / secrets.local.json
-                                 │
-Widget SDK <── static ───────────┘
-   │
-   ├─> /v0_1b/api/chat (Express) ──> aiService (OpenAI o4) + shopifyService/mcpService
-   │                                   │
-   │                                   └─> Storefront API (read-only product data)
-   │
-   └─> Shopify Ajax Cart (browser) for add/change/fetch cart
+Admin UI --(x-admin-secret)--> Admin API --> config.json / secrets.local.json
+                                 |
+Widget SDK <---- static ---------┘
+   |
+   |--> /v0_1b/api/chat (Express) --> aiService (OpenAI o4) + shopifyService/mcpService
+   |                                   |
+   |                                   └--> Storefront API (read-only product data)
+   |
+   └--> Shopify Ajax Cart (browser) for add/change/fetch cart
 ```
 
 ## Data flows
 - **Chat**: user message → widget POST `/v0_1b/api/chat` with `shopPublicId` → backend loads shop config + secrets → optional Storefront search → OpenAI `o4` with context → backend validates `blocks[]` → widget renders; cart actions go straight to Ajax Cart from the browser.
 - **Admin config**: admin UI (with secret) → `/v0_1b/api/admin/*` → update `config.json` and `secrets.local.json` (for OpenAI key/Shopify tokens).
 - **Embed**: merchant copies snippet pointing to `/v0_1b/widget/sdk.js` and calls `SmartScaleChat.init({ shopPublicId, shopDomain })`.
+
+## Example data files
+- `server/data/config.json`
+```json
+{
+  "clients": [
+    { "id": "client-123", "name": "Demo Client", "contactEmail": "ops@example.com" }
+  ],
+  "shops": [
+    { "id": "shop-123", "clientId": "client-123", "shopDomain": "demo.myshopify.com", "publicId": "demo-shop", "status": "active", "name": "Demo Shop" }
+  ],
+  "shopConfigs": {
+    "shop-123": {
+      "brandDescription": "Friendly outdoors brand",
+      "tone": "helpful",
+      "primaryColor": "#2563eb",
+      "accentColor": "#111827",
+      "widgetPosition": "bottom-right",
+      "canModifyCart": true,
+      "showProductImages": true,
+      "enableQuantityButtons": true
+    }
+  }
+}
+```
+- `server/data/secrets.local.json` (gitignored)
+```json
+{
+  "openai": { "apiKey": "sk-...", "model": "o4", "debugLogging": false },
+  "shopify": {
+    "shop-123": { "storefrontToken": "shpat_xxx" }
+  }
+}
+```
 
 ## Security
 - Admin access: enforced via `ADMIN_DASH_SECRET` on `/v0_1b/admin` static and `/v0_1b/api/admin/*`; return `ERR_ADMIN_AUTH_FAILED` on failure.
