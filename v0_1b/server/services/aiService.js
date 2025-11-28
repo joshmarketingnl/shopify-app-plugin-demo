@@ -59,7 +59,7 @@ async function getChatResponse({
   let response;
   try {
     response = await client.responses.create({
-      model: 'o4',
+      model: 'gpt-4o',
       input,
       temperature: 0.4,
     });
