@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
       limit: 3,
     });
   } catch (err) {
-    console.error('Product search failed', err);
+    // Logged inside shopifyService; continue without product context
   }
 
   try {
@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
     });
     res.json({ blocks: result.blocks || [] });
   } catch (err) {
-    console.error('Chat route failed', err);
+    // Generic fallback; a global error handler can refine this later
     res.status(500).json({
       blocks: [{ type: 'notice', text: 'Assistant is unavailable right now.' }],
     });

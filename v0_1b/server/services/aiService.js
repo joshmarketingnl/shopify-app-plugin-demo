@@ -1,5 +1,7 @@
 const { OpenAI } = require('openai');
 const secretService = require('./secretService');
+const logger = require('./logger');
+const errorCodes = require('./errorCodes');
 
 function buildSystemPrompt(shopConfig = {}) {
   const brand = shopConfig.brandDescription || 'This Shopify store';
@@ -36,6 +38,7 @@ async function getChatResponse({
       blocks: [
         { type: 'notice', text: 'Assistant is not configured yet. Please add an OpenAI key.' },
       ],
+      error: ERR_OPENAI_CALL_FAILED,
     };
   }
 
@@ -62,7 +65,12 @@ async function getChatResponse({
       temperature: 0.4,
     });
   } catch (err) {
-    console.error('OpenAI call failed', err);
+    logger.error(
+      errorCodes.ERR_OPENAI_CALL_FAILED,
+      'OpenAI call failed',
+      { shopId: shopConfig.id, message: userMessage },
+      err
+    );
     return {
       blocks: [
         {
@@ -70,6 +78,7 @@ async function getChatResponse({
           text: 'We could not reach the assistant right now. Please try again shortly.',
         },
       ],
+      error: errorCodes.ERR_OPENAI_CALL_FAILED,
     };
   }
 
@@ -81,7 +90,12 @@ async function getChatResponse({
     }
     return { blocks: parsed.blocks };
   } catch (err) {
-    console.error('AI response parse failed', err, content);
+    logger.error(
+      errorCodes.ERR_OPENAI_RESPONSE_INVALID,
+      'AI response parse failed',
+      { shopId: shopConfig.id },
+      err
+    );
     return {
       blocks: [
         {
@@ -89,6 +103,7 @@ async function getChatResponse({
           text: 'The assistant sent an unexpected response. Please try asking again.',
         },
       ],
+      error: errorCodes.ERR_OPENAI_RESPONSE_INVALID,
     };
   }
 }

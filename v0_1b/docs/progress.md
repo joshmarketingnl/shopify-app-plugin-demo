@@ -36,8 +36,10 @@ Notes:
 - Chat route now prefetches top products and passes product context into aiService prompts.
 - Added Shopify token resolver in secretService to allow per-shop tokens.
 
-[ ] PHASE_G_LOGGING_DEBUG  
+[x] PHASE_G_LOGGING_DEBUG  
 Notes:
+- Added centralized errorCodes and logger with debug flag support; integrated logging into AI calls.
+- Updated chat flow to handle errors gracefully; foundation for global error handling in place.
 
 [ ] PHASE_H_SECURITY_DEPLOY  
 Notes:
