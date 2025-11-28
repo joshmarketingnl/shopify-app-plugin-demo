@@ -41,3 +41,8 @@ Next: Phase 7 will focus on local testing harness updates and README development
 - Expanded README with local development steps (/health, /admin, /test/test-widget).
 
 Next: Phase 8 will add deployment notes for VPS and final v0.1 summary.
+
+## Phase 8 - Deployment prep
+- Added VPS deployment steps and known limitations to `README.md`; included pm2-friendly notes.
+- Created `scripts/deploy-notes.md` with concrete commands for pull/restart.
+- v0.1 ready for manual testing on a real Shopify theme (Ajax Cart) and further AI/catalog integration.
