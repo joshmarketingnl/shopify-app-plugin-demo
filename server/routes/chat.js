@@ -17,10 +17,13 @@ router.post('/', async (req, res) => {
 
     const shop = configService.getShopByPublicId(shopPublicId);
     if (!shop) {
-      return res.status(404).json({ error: 'shop not found' });
+      return res.status(404).json({ blocks: [{ type: 'text', role: 'assistant', content: 'Shop not found for this assistant.' }] });
     }
 
     const shopConfig = configService.getShopConfig(shop.id);
+    if (!shopConfig) {
+      return res.status(404).json({ blocks: [{ type: 'text', role: 'assistant', content: 'This shop is not configured yet.' }] });
+    }
 
     const result = await aiService.getChatResponse({
       shopConfig,

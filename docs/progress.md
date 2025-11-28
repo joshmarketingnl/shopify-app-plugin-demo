@@ -28,3 +28,10 @@ Next: Phase 5 will implement the widget SDK/chat UI with Ajax Cart hooks and sty
 - Widget now loads branding/capabilities via a public `/api/public/shop-config/:publicId` route and injects its own CSS from the widget host.
 
 Next: Phase 6 will wire the AI service and /api/chat to produce structured blocks.
+
+## Phase 6 - AI agent service & /api/chat
+- Implemented AI service with system prompt built from per-shop context (language, tone, base prompt, extra context) and OpenAI integration (fallback to stub blocks if not available).
+- /api/chat now validates shop config and returns structured `blocks` with assistant text and product_list suggestions.
+- Documented prompt behavior and fallback in `docs/agents.md`.
+
+Next: Phase 7 will focus on local testing harness updates and README development steps.

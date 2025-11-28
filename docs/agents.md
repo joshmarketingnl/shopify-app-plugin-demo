@@ -18,5 +18,6 @@
 - The widget renders UI from blocks and handles real-time cart changes directly via Ajax Cart.
 
 ## Prompt scaffolding
-- System prompt includes global behavior + per-shop context (brand tone, policies, goals).
+- System prompt includes global behavior + per-shop context (brand tone, policies, goals), language, and tone.
 - Guardrails: be honest about availability/pricing, avoid medical/financial claims, recommend checkout when the cart is ready.
+- If OpenAI is unavailable, fall back to a concise helper text plus a stub `product_list` so the widget can still render.
