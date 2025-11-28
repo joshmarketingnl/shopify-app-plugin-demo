@@ -35,3 +35,9 @@ Next: Phase 6 will wire the AI service and /api/chat to produce structured block
 - Documented prompt behavior and fallback in `docs/agents.md`.
 
 Next: Phase 7 will focus on local testing harness updates and README development steps.
+
+## Phase 7 - Local testing harness
+- Updated test harness to load the widget SDK from the running server and use the seeded `demo-shop`.
+- Expanded README with local development steps (/health, /admin, /test/test-widget).
+
+Next: Phase 8 will add deployment notes for VPS and final v0.1 summary.
