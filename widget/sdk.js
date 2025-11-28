@@ -235,10 +235,11 @@
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
     });
-    if (!res.ok) {
-      throw new Error(await res.text());
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok && !data.blocks) {
+      throw new Error('chat failed');
     }
-    return res.json();
+    return data;
   }
 
   function showTyping() {
@@ -263,7 +264,11 @@
     try {
       const data = await sendMessage(text);
       hideTyping();
-      appendBlocks(data.blocks || []);
+      if (data && Array.isArray(data.blocks)) {
+        appendBlocks(data.blocks);
+      } else {
+        appendBlocks([{ type: 'text', role: 'assistant', content: 'Something went wrong.' }]);
+      }
     } catch (err) {
       hideTyping();
       showToast('Chat request failed');

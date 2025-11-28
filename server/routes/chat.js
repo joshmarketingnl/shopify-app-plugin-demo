@@ -12,17 +12,23 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ error: 'message is required' });
     }
     if (!shopPublicId) {
-      return res.status(400).json({ error: 'shopPublicId is required' });
+      return res.json({
+        blocks: [{ type: 'text', role: 'assistant', content: 'shopPublicId is required.' }],
+      });
     }
 
     const shop = configService.getShopByPublicId(shopPublicId);
     if (!shop) {
-      return res.status(404).json({ blocks: [{ type: 'text', role: 'assistant', content: 'Shop not found for this assistant.' }] });
+      return res.json({
+        blocks: [{ type: 'text', role: 'assistant', content: 'Shop not found for this assistant.' }],
+      });
     }
 
     const shopConfig = configService.getShopConfig(shop.id);
     if (!shopConfig) {
-      return res.status(404).json({ blocks: [{ type: 'text', role: 'assistant', content: 'This shop is not configured yet.' }] });
+      return res.json({
+        blocks: [{ type: 'text', role: 'assistant', content: 'This shop is not configured yet.' }],
+      });
     }
 
     const result = await aiService.getChatResponse({
