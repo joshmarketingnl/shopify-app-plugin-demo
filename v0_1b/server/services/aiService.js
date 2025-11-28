@@ -32,19 +32,19 @@ async function getChatResponse({
   conversationContext = [],
   productContext = [],
 }) {
-  const { apiKey, model } = secretService.getOpenAiConfig();
+  const { apiKey } = secretService.getOpenAiConfig();
   if (!apiKey) {
     return {
       blocks: [
         { type: 'notice', text: 'Assistant is not configured yet. Please add an OpenAI key.' },
       ],
-      error: ERR_OPENAI_CALL_FAILED,
+      error: errorCodes.ERR_OPENAI_CALL_FAILED,
     };
   }
 
   const client = new OpenAI({ apiKey });
 
-  const messages = [
+  const input = [
     { role: 'system', content: buildSystemPrompt(shopConfig) },
     productContext.length
       ? {
@@ -56,12 +56,11 @@ async function getChatResponse({
     { role: 'user', content: userMessage },
   ].filter(Boolean);
 
-  let completion;
+  let response;
   try {
-    completion = await client.chat.completions.create({
+    response = await client.responses.create({
       model: 'o4',
-      messages,
-      response_format: { type: 'json_object' },
+      input,
       temperature: 0.4,
     });
   } catch (err) {
@@ -82,7 +81,12 @@ async function getChatResponse({
     };
   }
 
-  const content = completion?.choices?.[0]?.message?.content || '';
+  const content =
+    response?.output_text ||
+    response?.output?.[0]?.content?.[0]?.text ||
+    response?.output?.[0]?.content?.[0]?.text?.value ||
+    '';
+
   try {
     const parsed = JSON.parse(content);
     if (!parsed.blocks || !Array.isArray(parsed.blocks)) {
