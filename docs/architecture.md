@@ -30,3 +30,50 @@
 - Add theme app embed for managed injection.
 - Add persistent storage + OAuth for per-shop tokens and Storefront API access tokens.
 - Consider MCP universal cart/search when Shopify GA is available.
+
+## Data shapes (JSON examples)
+- Client:
+```json
+{
+  "id": "client_123",
+  "name": "Demo Client",
+  "contactEmail": "demo@example.com"
+}
+```
+- Shop:
+```json
+{
+  "id": "shop_123",
+  "clientId": "client_123",
+  "shopDomain": "demo-shop.myshopify.com",
+  "publicId": "demo-shop",
+  "status": "active"
+}
+```
+- ShopConfig:
+```json
+{
+  "shopId": "shop_123",
+  "ai": {
+    "baseSystemPrompt": "",
+    "extraContext": "",
+    "language": "en",
+    "tone": "friendly"
+  },
+  "branding": {
+    "primaryColor": "#0c6dfd",
+    "accentColor": "#f97316",
+    "widgetPosition": "bottom-right"
+  },
+  "integration": {
+    "shopDomain": "demo-shop.myshopify.com",
+    "storefrontToken": "",
+    "mcpConfig": null
+  },
+  "capabilities": {
+    "canModifyCart": true,
+    "showProductImages": true,
+    "enableQuantityButtons": true
+  }
+}
+```
