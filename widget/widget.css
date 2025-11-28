@@ -1,0 +1,64 @@
+:root {
+  --ssc-primary: #0c6dfd;
+  --ssc-text: #1f1f1f;
+  --ssc-bg: #ffffff;
+  --ssc-shadow: rgba(0, 0, 0, 0.15);
+}
+
+.ssc-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 16px;
+  background: var(--ssc-primary);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 4px 12px var(--ssc-shadow);
+}
+
+.ssc-panel {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  width: 320px;
+  max-width: 90vw;
+  background: var(--ssc-bg);
+  color: var(--ssc-text);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px var(--ssc-shadow);
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ssc-panel.ssc-open {
+  display: flex;
+}
+
+.ssc-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px;
+  border-bottom: 1px solid #e5e5e5;
+  font-weight: 600;
+}
+
+.ssc-panel-header button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.ssc-panel-body {
+  padding: 12px;
+  min-height: 120px;
+}
+
+.ssc-placeholder {
+  margin: 0;
+  color: #555;
+}

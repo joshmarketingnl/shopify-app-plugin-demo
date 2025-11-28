@@ -1,0 +1,31 @@
+{
+  "name": "shopify-app-plugin",
+  "version": "1.0.0",
+  "description": "Multi-tenant AI shopping assistant for Shopify storefronts (Express + vanilla JS).",
+  "main": "server/index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "test": "echo \"No automated tests yet\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshmarketingnl/shopify-app-plugin-demo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/joshmarketingnl/shopify-app-plugin-demo/issues"
+  },
+  "homepage": "https://github.com/joshmarketingnl/shopify-app-plugin-demo#readme",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "openai": "^6.9.1"
+  }
+}
