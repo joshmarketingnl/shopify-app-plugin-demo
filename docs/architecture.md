@@ -26,6 +26,11 @@
 - AI/service layer: generate product suggestions and reasoning; output structured blocks; never handle per-click cart changes.
 - Shopify APIs: Ajax Cart for cart mutations in browser; Storefront API/MCP for catalog data when needed.
 
+## Admin UX (v0.1)
+- Single-page view: clients (left), shops (middle), shop configuration (full-width row).
+- Config form edits AI prompt/context, branding colors, widget position, integration domain/token, and cart/product toggles.
+- Embed snippet is generated per shop using `shopPublicId` and `shopDomain` for copy/paste.
+
 ## Notes for future phases
 - Add theme app embed for managed injection.
 - Add persistent storage + OAuth for per-shop tokens and Storefront API access tokens.

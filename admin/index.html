@@ -3,17 +3,159 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shopify AI Assistant Admin</title>
+    <title>AI Assistant Admin</title>
     <link rel="stylesheet" href="admin.css" />
   </head>
   <body>
     <header>
-      <h1>AI Assistant Admin</h1>
-      <p class="subtitle">Phase 2 scaffold - UI to be built in later phases.</p>
+      <div>
+        <h1>AI Assistant Admin</h1>
+        <p class="subtitle">Manage clients, shops, and per-shop assistant settings.</p>
+      </div>
+      <div class="badge">v0.1</div>
     </header>
-    <main id="app">
-      <p>Admin UI placeholder. Next phases will load clients, shops, and configs here.</p>
+
+    <main class="layout">
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Clients</h2>
+        </div>
+        <ul id="clientsList" class="list"></ul>
+        <form id="clientForm" class="stack">
+          <label>
+            Name
+            <input type="text" name="name" placeholder="Client name" required />
+          </label>
+          <label>
+            Contact email
+            <input type="email" name="contactEmail" placeholder="ops@example.com" />
+          </label>
+          <button type="submit">Add client</button>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <h2>Shops</h2>
+          <div id="selectedClientLabel" class="meta"></div>
+        </div>
+        <ul id="shopsList" class="list"></ul>
+        <form id="shopForm" class="stack">
+          <label>
+            Shop domain
+            <input type="text" name="shopDomain" placeholder="your-shop.myshopify.com" required />
+          </label>
+          <label>
+            Public ID (used by widget)
+            <input type="text" name="publicId" placeholder="public-short-id" required />
+          </label>
+          <label>
+            Status
+            <select name="status">
+              <option value="active">active</option>
+              <option value="inactive">inactive</option>
+            </select>
+          </label>
+          <button type="submit">Add shop</button>
+        </form>
+      </section>
+
+      <section class="panel panel-wide">
+        <div class="panel-header">
+          <h2>Shop config</h2>
+          <div id="selectedShopLabel" class="meta"></div>
+        </div>
+        <div id="configPlaceholder" class="placeholder">Select a shop to view and edit its configuration.</div>
+        <form id="configForm" class="grid hidden">
+          <div class="field">
+            <label>
+              AI base prompt
+              <textarea name="baseSystemPrompt" rows="3" placeholder="High-level assistant guidance"></textarea>
+            </label>
+          </div>
+          <div class="field">
+            <label>
+              Extra context
+              <textarea name="extraContext" rows="3" placeholder="Brand, policies, goals"></textarea>
+            </label>
+          </div>
+          <div class="field">
+            <label>
+              Language
+              <input type="text" name="language" placeholder="en" />
+            </label>
+          </div>
+          <div class="field">
+            <label>
+              Tone
+              <input type="text" name="tone" placeholder="friendly" />
+            </label>
+          </div>
+          <div class="field">
+            <label>
+              Primary color
+              <input type="color" name="primaryColor" value="#0c6dfd" />
+            </label>
+          </div>
+          <div class="field">
+            <label>
+              Accent color
+              <input type="color" name="accentColor" value="#f97316" />
+            </label>
+          </div>
+          <div class="field">
+            <label>
+              Widget position
+              <select name="widgetPosition">
+                <option value="bottom-right">bottom-right</option>
+                <option value="bottom-left">bottom-left</option>
+              </select>
+            </label>
+          </div>
+          <div class="field">
+            <label>
+              Shop domain
+              <input type="text" name="shopDomain" placeholder="your-shop.myshopify.com" />
+            </label>
+          </div>
+          <div class="field">
+            <label>
+              Storefront token (optional)
+              <input type="text" name="storefrontToken" placeholder="Storefront API token" />
+            </label>
+          </div>
+          <div class="field field-checkbox">
+            <label>
+              <input type="checkbox" name="canModifyCart" />
+              Allow widget to modify cart
+            </label>
+          </div>
+          <div class="field field-checkbox">
+            <label>
+              <input type="checkbox" name="showProductImages" />
+              Show product images
+            </label>
+          </div>
+          <div class="field field-checkbox">
+            <label>
+              <input type="checkbox" name="enableQuantityButtons" />
+              Enable quantity buttons
+            </label>
+          </div>
+          <div class="actions">
+            <button type="submit">Save config</button>
+          </div>
+        </form>
+        <div class="snippet">
+          <div class="panel-header">
+            <h3>Embed snippet</h3>
+          </div>
+          <textarea id="snippet" rows="6" readonly></textarea>
+        </div>
+      </section>
     </main>
+
+    <div id="toast" class="toast hidden"></div>
     <script src="admin.js"></script>
   </body>
 </html>

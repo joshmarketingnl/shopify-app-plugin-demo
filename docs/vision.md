@@ -13,3 +13,7 @@
 - Real-time, snappy cart interactions via the Shopify Ajax Cart API (no slow round trips through the AI loop).
 - Respect each shop's tone, brand colors, and policies while keeping the UX lightweight.
 - Keep the stack minimal and debuggable (plain Express, vanilla JS/CSS, no build steps).
+
+## Admin UX
+- Single-page admin with just enough controls: add clients/shops, edit prompts/context/branding/capabilities, and copy the embed snippet.
+- Defaults are pre-filled (colors, tone, demo shop) to reduce setup time; merchants should not face a wall of toggles.
