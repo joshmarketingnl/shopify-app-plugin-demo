@@ -41,5 +41,8 @@ Notes:
 - Added centralized errorCodes and logger with debug flag support; integrated logging into AI calls.
 - Updated chat flow to handle errors gracefully; foundation for global error handling in place.
 
-[ ] PHASE_H_SECURITY_DEPLOY  
+[x] PHASE_H_SECURITY_DEPLOY  
 Notes:
+- Added admin secret middleware guarding `/v0_1b/admin` and `/v0_1b/api/admin/*`.
+- Added global error handler scaffold and deployment/config guidance in README and architecture docs.
+- Documented env/secret setup and known limitations.

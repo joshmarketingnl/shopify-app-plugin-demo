@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 
 const chatRouter = require('./routes/chat');
 const adminRouter = require('./routes/admin');
+const { requireAdminSecret } = require('./services/securityService');
+const logger = require('./services/logger');
 
 const rootDir = path.resolve(__dirname, '..');
 dotenv.config({ path: path.join(rootDir, '.env') });
@@ -24,7 +26,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 
 // Static assets for admin, widget, and test harness.
-app.use('/v0_1b/admin', express.static(path.join(rootDir, 'admin')));
+app.use('/v0_1b/admin', requireAdminSecret, express.static(path.join(rootDir, 'admin')));
 app.use('/v0_1b/widget', express.static(path.join(rootDir, 'widget')));
 app.use('/v0_1b/test', express.static(path.join(rootDir, 'test')));
 
@@ -35,7 +37,16 @@ app.get('/v0_1b/health', (req, res) => {
 
 // API routes
 app.use('/v0_1b/api/chat', chatRouter);
-app.use('/v0_1b/api/admin', adminRouter);
+app.use('/v0_1b/api/admin', requireAdminSecret, adminRouter);
+
+// Global error handler
+app.use((err, req, res, next) => {
+  logger.error(err.code || 'ERR_UNHANDLED', err.message || 'Unhandled error', { path: req.originalUrl }, err);
+  res.status(err.status || 500).json({
+    error: 'Something went wrong',
+    code: err.code || 'ERR_UNHANDLED',
+  });
+});
 
 // Not found handler
 app.use((req, res) => {

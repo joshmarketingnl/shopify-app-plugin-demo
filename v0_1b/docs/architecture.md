@@ -67,6 +67,12 @@ Widget SDK <---- static ---------┘
 - CORS: public routes (`/v0_1b/widget/*`, `/v0_1b/api/chat`, `/v0_1b/test/*`) allow shop origins; admin routes require secret and stricter CORS if needed.
 - Error handling: centralized error codes + logger; friendly messages to clients.
 
+## Deployment notes
+- Env: set `PORT`, `HOST_BASE_URL`, `ADMIN_DASH_SECRET`, and optionally `OPENAI_API_KEY`.
+- File storage: `server/data/config.json` (tracked) and `server/data/secrets.local.json` (gitignored) must be writable.
+- Start: `npm start` (or `npm run dev`) from `v0_1b/`.
+- Ensure HTTPS and origin restrictions when hosting the widget on production domains.
+
 ## Differences from v0.1 (legacy)
 - Strict namespacing `/v0_1b/*`.
 - File-based multi-tenant config/secrets under `v0_1b/server/data/`.
